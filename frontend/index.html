@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <title>GreyMatter</title>
+
+    <link rel="stylesheet" href="/css/style.css?v=95">
+</head>
+
+<body>
+
+    <header>
+        <img id="home-logo" src="/assets/greymatter-logo.png?v=63" alt="GreyMatter">
+        <nav class="bottom-nav">
+            <button id="songs-button" type="button" aria-label="Songs">
+                <span>Songs</span>
+                <svg class="nav-pixel-icon" viewBox="0 0 24 24" aria-hidden="true" shape-rendering="crispEdges"><path d="M7 2h15v3H10v10H7zM19 5h3v8h-3zM3 14h7v3H3zM14 12h7v3h-7z"/></svg>
+            </button>
+            <button id="playlists-button" type="button" aria-label="Playlists">
+                <span>Playlists</span>
+                <svg class="nav-pixel-icon" viewBox="0 0 24 24" aria-hidden="true" shape-rendering="crispEdges" fill-rule="evenodd"><path d="M1 2h22v3H1zM1 8h10v3H1zM1 14h10v3H1zM1 20h10v2H1zM13 6h3v2h3v2h3v2h2v4h-2v2h-3v2h-3v2h-3z M16 10v8h2v-2h3v-2h2v-2h-2v-2h-3v-2z" fill-rule="evenodd"/></svg>
+            </button>
+            <button id="add-button" type="button">Import</button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Songs section -->
+        <section id="songs-section" class="app-section">
+
+            <div class="section-heading">
+                <div class="playlist-heading-title">
+                    <h2>Songs</h2>
+                    <button id="edit-playlist-button" class="playlist-edit-button" type="button" aria-label="Edit playlist" title="Edit playlist" hidden>
+                        <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><path d="M1 31 5 20 12 27Z"/><path d="m5 20 15-15 7 7-15 15z"/><path d="m22 4 5-4h3l2 2v4l-5 5z"/></svg>
+                    </button>
+                </div>
+                <details id="library-menu" class="library-menu">
+                    <summary>Library controls</summary>
+            <div class="library-menu-panel">
+                <button id="shuffle-button" type="button">Shuffle all visible songs</button>
+                        <p id="shuffle-status" role="status" aria-live="polite"></p>
+                        <fieldset id="playlist-filters">
+                            <legend>Hide songs in these playlists</legend>
+                            <p id="playlist-filters-empty">No playlists yet.</p>
+                            <div id="playlist-filter-options"></div>
+                        </fieldset>
+                    </div>
+                </details>
+            </div>
+
+            <input id="song-search" type="search" placeholder="Search songs" aria-label="Search songs" autocomplete="off">
+            <p id="song-action-status" role="status" aria-live="polite" hidden></p>
+
+            <div id="playlist-controls" class="playlist-controls" hidden>
+                <button id="play-playlist-button" type="button">Play playlist</button>
+                <button id="playlist-shuffle-button" type="button">Shuffle playlist</button>
+                <button id="sync-youtube-playlist-button" type="button">Update from YouTube</button>
+            </div>
+            <p id="playlist-controls-status" role="status" aria-live="polite" hidden></p>
+
+            <div id="trip-actions" hidden>
+                <button id="download-playlist-button" type="button">
+                    <span class="playlist-offline-icon" aria-hidden="true">↓</span>
+                    <span class="playlist-offline-label">Make playlist available offline</span>
+                </button>
+                <p id="trip-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div id="library"></div>
+
+        </section>
+
+
+        <!-- Playlists section -->
+        <section id="playlists-section" class="app-section">
+
+            <h2>Playlists</h2>
+
+            <form id="create-playlist-form" class="playlist-creator">
+                <input id="new-playlist-name" type="text" maxlength="100" placeholder="New playlist name" required>
+                <button type="submit">Create</button>
+            </form>
+            <p id="create-playlist-status" role="status" aria-live="polite"></p>
+
+            <div id="playlists"></div>
+
+        </section>
+
+
+        <!-- Add section -->
+        <section id="add-section" class="app-section">
+
+            <h2>Add</h2>
+
+            <div class="youtube-import">
+
+                <input
+                    id="youtube-url"
+                    type="text"
+                    placeholder="Paste YouTube video or playlist URL"
+                >
+
+                <button id="youtube-import-button">
+                    Import
+                </button>
+
+            </div>
+
+            <div id="import-status" role="status" aria-live="polite"></div>
+
+            <div class="files-import">
+                <label for="files-audio-input">Already downloaded an MP3?</label>
+                <input id="files-audio-input" type="file" accept="audio/mpeg,audio/*,.mp3" multiple>
+                <button id="files-import-button" type="button">Import from Files</button>
+                <div id="files-import-status" role="status" aria-live="polite"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Music player -->
+    <div class="player" hidden>
+
+        <div class="now-playing">
+            <strong id="current-title">Wildfire</strong>
+            <span id="current-artist">Crusher P</span>
+        </div>
+
+        <audio id="player"></audio>
+
+        <div class="controls">
+            <button id="previous-song-button" type="button" aria-label="Previous song">
+                <svg class="pixel-skip-icon" viewBox="0 0 48 32" aria-hidden="true" shape-rendering="crispEdges">
+                    <g transform="translate(48 0) scale(-1 1)">
+                        <path d="M2 2h6v4h6v4h6v4h6v4h-6v4h-6v4H8v4H2z M18 2h6v4h6v4h6v4h6v4h-6v4h-6v4h-6v4h-6z" />
+                        <rect x="44" y="2" width="4" height="28" />
+                    </g>
+                </svg>
+            </button>
+            <button id="main-play-button" type="button" aria-label="Play">
+                <svg class="player-play-icon" viewBox="0 0 24 24" aria-hidden="true" shape-rendering="crispEdges">
+                    <path d="M4 2h5v4h5v4h5v4h-5v4H9v4H4z" />
+                </svg>
+                <svg class="player-pause-icon" viewBox="0 0 24 24" aria-hidden="true" shape-rendering="crispEdges">
+                    <rect x="4" y="3" width="6" height="18" />
+                    <rect x="14" y="3" width="6" height="18" />
+                </svg>
+            </button>
+            <button id="next-song-button" type="button" aria-label="Next song">
+                <svg class="pixel-skip-icon" viewBox="0 0 48 32" aria-hidden="true" shape-rendering="crispEdges">
+                    <path d="M2 2h6v4h6v4h6v4h6v4h-6v4h-6v4H8v4H2z M18 2h6v4h6v4h6v4h6v4h-6v4h-6v4h-6v4h-6z" />
+                    <rect x="44" y="2" width="4" height="28" />
+                </svg>
+            </button>
+        </div>
+
+        <input
+            id="progress"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+        >
+
+    </div>
+
+    <dialog id="add-to-playlist-dialog">
+        <form id="add-to-playlist-form">
+            <h2 id="add-to-playlist-title">Add to playlist</h2>
+            <label for="add-to-playlist-select">Playlist</label>
+            <select id="add-to-playlist-select"></select>
+            <p id="add-to-playlist-status" role="status" aria-live="polite"></p>
+            <div class="dialog-actions">
+                <button id="close-add-to-playlist-button" type="button">Cancel</button>
+                <button id="confirm-add-to-playlist-button" type="submit">Add song</button>
+            </div>
+        </form>
+    </dialog>
+
+
+    <dialog id="edit-playlist-dialog">
+        <form id="edit-playlist-form">
+            <h2>Edit playlist</h2>
+            <label for="edit-playlist-name">Playlist name</label>
+            <input id="edit-playlist-name" type="text" maxlength="100" required>
+            <label for="edit-playlist-artwork">Cover image</label>
+            <input id="edit-playlist-artwork" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+            <small>Choose an image from this device.</small>
+            <p id="edit-playlist-status" role="status" aria-live="polite"></p>
+            <div class="dialog-actions">
+                <div class="reset-actions">
+                    <button id="reset-playlist-name-button" type="button"><svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><path d="M14 2v5H9M13.5 7A5.5 5.5 0 1 0 14 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>Reset name</button>
+                    <button id="reset-playlist-artwork-button" type="button"><svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><path d="M14 2v5H9M13.5 7A5.5 5.5 0 1 0 14 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>Reset image</button>
+                </div>
+                <button id="cancel-edit-playlist-button" type="button">Cancel</button>
+                <button id="save-edit-playlist-button" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="/js/app.js?v=71"></script>
+
+</body>
+</html>

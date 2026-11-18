@@ -1,0 +1,7 @@
+{$GREYMATTER_DOMAIN} {
+	encode zstd gzip
+	basic_auth {
+		{$GREYMATTER_USERNAME} {$GREYMATTER_PASSWORD_HASH}
+	}
+	reverse_proxy app:8000
+}

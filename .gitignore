@@ -1,0 +1,9 @@
+backend/venv/
+backend/__pycache__/
+backend/*.pem
+backend/music.db
+music/*
+!music/.gitkeep
+artwork/*
+!artwork/.gitkeep
+.DS_Store
