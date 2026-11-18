@@ -1,4 +1,4 @@
-const CACHE_NAME = "greymatter-v99";
+const CACHE_NAME = "greymatter-v100";
 // Refresh cached frontend assets so updated styling is applied.
 const MUSIC_CACHE_NAME = "greymatter-music-v2";
 const LOCAL_MUSIC_CACHE_NAME = "greymatter-imported-music-v1";
@@ -6,8 +6,8 @@ const LOCAL_MUSIC_CACHE_NAME = "greymatter-imported-music-v1";
 const APP_FILES = [
     "/",
     "/index.html",
-    "/css/style.css?v=95",
-    "/js/app.js?v=71",
+    "/css/style.css?v=97",
+    "/js/app.js?v=72",
     "/assets/greymatter-logo.png?v=63",
     "/assets/w95f.woff2",
     "/manifest.webmanifest"

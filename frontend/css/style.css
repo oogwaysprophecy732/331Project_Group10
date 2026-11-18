@@ -177,6 +177,11 @@ main {
     font-size: 13px;
 }
 
+.empty-state-message {
+    margin: 12px 0;
+    color: #aaa;
+}
+
 .song {
     display: flex;
     align-items: center;
@@ -872,7 +877,9 @@ dialog select {
 
     .bottom-nav {
         position: static;
-        margin-right: 16px;
+        margin-right: 28px;
+        transform: translateY(8px);
+        font-size: 27px;
     }
 
 }

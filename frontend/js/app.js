@@ -439,7 +439,8 @@ async function displaySongs(list) {
   if (!list.length) {
     if (songSearch.value.trim()) library.textContent = "No songs match your search.";
     else if (activePlaylist) library.textContent = "This playlist has no songs.";
-    else library.textContent = librarySongs.length ? "No songs match your playlist filters." : "No songs yet. Add a YouTube video or playlist.";
+    else if (librarySongs.length) library.textContent = "No songs match your playlist filters.";
+    else library.append(element("p", "empty-state-message", "No songs yet :/."));
     return;
   }
   for (let index = 0; index < list.length; index += 1) library.append(await makeSongRow(list[index], index));
@@ -566,7 +567,7 @@ async function loadPlaylists() {
   }
   availablePlaylists = playlists;
   container.replaceChildren();
-  if (!playlists.length) container.textContent = "No playlists yet.";
+  if (!playlists.length) container.append(element("p", "empty-state-message", "No playlists yet :/."));
   playlists.forEach((playlist) => {
     const row = element("button", "playlist-row");
     row.type = "button";
